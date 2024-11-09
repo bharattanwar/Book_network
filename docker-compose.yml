@@ -10,7 +10,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql               # Persistent storage for MySQL
     ports:
-      - "3306:3306"                             # Expose MySQL on port 3306
+      - "3307:3306"                             # Expose MySQL on port 3306
     networks:
       - spring-demo
     restart: unless-stopped                     # Restart policy

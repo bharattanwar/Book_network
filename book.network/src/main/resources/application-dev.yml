@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/book_social_network  # MySQL default port is 3306
+    url: jdbc:mysql://localhost:3307/book_social_network  # MySQL default port is 3306
     username: username                                    # MySQL username
     password: password                                    # MySQL password
     driver-class-name: com.mysql.cj.jdbc.Driver           # MySQL driver
@@ -34,6 +34,9 @@ application:
     jwt:
       secret-key: 23498SDFG90FG897675DFGD9HFVCVB908908
       expiration: 43545600
+  mailing:
+    frontend:
+      activation-url: http://localhost:4200/activate-account
 server:
   port: 8088
 
