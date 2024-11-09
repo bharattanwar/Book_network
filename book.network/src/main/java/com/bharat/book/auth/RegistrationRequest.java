@@ -16,17 +16,17 @@ import java.time.LocalDate;
 @Builder
 public class RegistrationRequest {
 
-    @NotEmpty(message = "First name is needed")
+    @NotEmpty(message = "First name needed")
     @NotBlank(message = "First name needed")
     private String firstname;
-    @NotEmpty(message = "Last name is needed")
+    @NotEmpty(message = "Last name needed")
     @NotBlank(message = "Last name needed")
     private String lastname;
-    @NotEmpty(message = "Email is needed")
+    @NotEmpty(message = "Email needed")
     @NotBlank(message = "Email needed")
     @Email(message = "Email is not in correct format")
     private  String email;
-    @NotEmpty(message = "password is needed")
+    @NotEmpty(message = "password needed")
     @NotBlank(message = "password needed")
     @Size(min = 6,message = "Length should be minimum 6 characters")
     private String password;
