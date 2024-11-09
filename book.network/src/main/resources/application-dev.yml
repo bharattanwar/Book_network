@@ -22,17 +22,17 @@ spring:
       mail:
         smtp:
           trust: "*"
-        auth: true
-        starttls:
-          enabled: true
-        connectiontimeout: 5000
-        timeout: 3000
-        writetimeout: 5000
+          auth: true
+          starttls:
+            enabled: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
 
 application:
   security:
     jwt:
-      secret-key: 23498SDFG90FG897675DFGD9HFVCVB908908
+      secret-key: VjE2ZkZHc0lLZkdyNTFZcmxjWmZZZDg4RlZyQlJGcFlGSWZGZ0FoMQ==
       expiration: 43545600
   mailing:
     frontend:

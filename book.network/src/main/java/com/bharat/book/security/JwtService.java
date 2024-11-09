@@ -10,14 +10,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class jwtService {
+public class JwtService {
 
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
@@ -28,7 +27,7 @@ public class jwtService {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    private String generateToken(Map<String,Object> claims, UserDetails userDetails) {
+    public String generateToken(Map<String,Object> claims, UserDetails userDetails) {
         return buildToken(claims,userDetails,jwtExpiration);
     }
 
