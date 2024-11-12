@@ -9,6 +9,7 @@ import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("books")
@@ -43,11 +44,54 @@ public class BookController {
     }
 
     @GetMapping("/borrowed")
-    public ResponseEntity<PageResponse<BookResponse>> findAllBorrowedBooks(@RequestParam(name = "page",defaultValue = "0",required = false) int page,
+    public ResponseEntity<PageResponse<BorrowedBookResponse>> findAllBorrowedBooks(@RequestParam(name = "page",defaultValue = "0",required = false) int page,
                                                                           @RequestParam(name = "size",defaultValue = "10",required = false) int size,
                                                                           Authentication connectedUser){
         return ResponseEntity.ok(bookService.findAllBorrowedBooks(page,size,connectedUser));
     }
 
+    @GetMapping("/returned")
+    public ResponseEntity<PageResponse<BorrowedBookResponse>> findAllReturnedBooks(@RequestParam(name = "page",defaultValue = "0",required = false) int page,
+                                                                                   @RequestParam(name = "size",defaultValue = "10",required = false) int size,
+                                                                                   Authentication connectedUser){
+        return ResponseEntity.ok(bookService.findAllReturnedBooks(page,size,connectedUser));
+    }
+
+    @PatchMapping("/shareable/{book-id}")
+    public ResponseEntity<Integer> updateShareableStatus(@PathVariable("book-id") Integer bookId,
+                                                         Authentication connectedUser){
+        return ResponseEntity.ok(bookService.updateShareableStatus(bookId,connectedUser));
+    }
+
+    @PatchMapping("/archived/{book-id}")
+    public ResponseEntity<Integer> updateArchivedStatus(@PathVariable("book-id") Integer bookId,
+                                                         Authentication connectedUser){
+        return ResponseEntity.ok(bookService.updateArchivedStatus(bookId,connectedUser));
+    }
+
+    @PostMapping("/boorow/{book-id}")
+    public ResponseEntity<Integer> borrowBook(@PathVariable("book-id") Integer bookId,
+                                              Authentication connectedUser){
+        return ResponseEntity.ok(bookService.borrowBook(bookId,connectedUser));
+    }
+
+    @PatchMapping("/borrow/return/{book-id}")
+    public ResponseEntity<Integer> returnBorrowBook(@PathVariable("book-id") Integer bookId,
+                                                    Authentication connectedUser){
+        return ResponseEntity.ok(bookService.returnBorrowedBook(bookId,connectedUser));
+    }
+
+    @PatchMapping("/borrow/return/approve/{book-id}")
+    public ResponseEntity<Integer> approveReturnBorrowBook(@PathVariable("book-id") Integer bookId,
+                                                    Authentication connectedUser){
+        return ResponseEntity.ok(bookService.approveReturnBorrowedBook(bookId,connectedUser));
+    }
+
+    @PostMapping(value = "/cover/{book-id}",consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadBookCoverPicture(@PathVariable("book-id") Integer bookId, @RequestPart("file") MultipartFile file,Authentication connectedUser){
+        bookService.uploadBookCoverPicture(file ,connectedUser,bookId);
+        return ResponseEntity.accepted().build();
+
+    }
 
 }

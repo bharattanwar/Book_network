@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 public class Feedback extends BaseModel {
 
     @Column
-    private Double rating;
+    private Double note;
     private String comment;
     @ManyToOne
     @JoinColumn(name = "book_id")

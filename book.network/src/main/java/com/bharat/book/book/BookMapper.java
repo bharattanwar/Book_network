@@ -1,5 +1,7 @@
 package com.bharat.book.book;
 
+import com.bharat.book.file.FileUtils;
+import com.bharat.book.history.BookTransactionHistory;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,7 +28,19 @@ public class BookMapper {
                 .archived(book.isArchived())
                 .shareable(book.isShareable())
                 .owner(book.getOwner().fullName())
-                //.cover(FileUtils.readFileFromLocation(book.getBookCover()))
+                .cover(FileUtils.readFileFromLocation(book.getBookCover()))
+                .build();
+    }
+
+    public BorrowedBookResponse toBorrowedBookResponse(BookTransactionHistory history) {
+        return BorrowedBookResponse.builder()
+                .id(history.getBook().getId())
+                .title(history.getBook().getTitle())
+                .authorName(history.getBook().getAuthorName())
+                .isbn(history.getBook().getIsbn())
+                .rate(history.getBook().getRate())
+                .retunrned(history.isReturnApproved())
+                .returnApproved(history.isReturnApproved())
                 .build();
     }
 }
