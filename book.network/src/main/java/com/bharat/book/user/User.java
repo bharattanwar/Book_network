@@ -5,6 +5,7 @@ import com.bharat.book.history.BookTransactionHistory;
 import com.bharat.book.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -19,14 +20,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static jakarta.persistence.FetchType.EAGER;
+
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
+@SuperBuilder
 @NoArgsConstructor
-@Entity
-@Table(name = "_user")
-@EntityListeners(AuditingEntityListener.class)
+@AllArgsConstructor
+// @Entity
+// @Table(name = "_user")
+// @EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails, Principal {
 
     @Id
@@ -34,29 +37,26 @@ public class User implements UserDetails, Principal {
     private Integer id;
     private String firstname;
     private String lastname;
-    private LocalDate dateofbirth;
+    private LocalDate dateOfBirth;
     @Column(unique = true)
-    private  String email;
+    private String email;
     private String password;
-    private boolean accountlocked;
+    private boolean accountLocked;
     private boolean enabled;
-    @CreatedDate
-    @Column(nullable = false,updatable = false)
-    private LocalDateTime createdAt;
-    @LastModifiedDate
-    @Column(insertable = false)
-    private LocalDateTime updatedAt;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = EAGER)
     private List<Role> roles;
     @OneToMany(mappedBy = "owner")
     private List<Book> books;
     @OneToMany(mappedBy = "user")
     private List<BookTransactionHistory> histories;
 
-    @Override
-    public String getName() {
-        return email;
-    }
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime lastModifiedDate;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -83,7 +83,7 @@ public class User implements UserDetails, Principal {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !accountlocked;
+        return !accountLocked;
     }
 
     @Override
@@ -96,7 +96,16 @@ public class User implements UserDetails, Principal {
         return enabled;
     }
 
-    public String fullName(){
+    public String fullName() {
+        return getFirstname() + " " + getLastname();
+    }
+
+    @Override
+    public String getName() {
+        return email;
+    }
+
+    public String getFullName() {
         return firstname + " " + lastname;
     }
 }

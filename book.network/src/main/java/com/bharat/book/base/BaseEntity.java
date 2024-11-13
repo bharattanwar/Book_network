@@ -21,22 +21,25 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class BaseModel {
+public class BaseEntity {
 
     @Id
     @GeneratedValue
     private Integer id;
 
     @CreatedDate
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdDate;
+
     @LastModifiedDate
     @Column(insertable = false)
     private LocalDateTime lastModifiedDate;
+
     @CreatedBy
-    @Column(nullable = false,updatable = false)
-    private Integer createdBy;
+    @Column(nullable = false, updatable = false)
+    private String createdBy;
+
     @LastModifiedBy
     @Column(insertable = false)
-    private Integer lastModifiedBy;
+    private String lastModifiedBy;
 }

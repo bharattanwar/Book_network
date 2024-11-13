@@ -1,6 +1,6 @@
 package com.bharat.book.history;
 
-import com.bharat.book.base.BaseModel;
+import com.bharat.book.base.BaseEntity;
 import com.bharat.book.book.Book;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,11 +14,13 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
 @Entity
-public class BookTransactionHistory extends BaseModel {
+public class BookTransactionHistory extends BaseEntity {
+
+    // @ManyToOne
     @Column(name = "user_id")
     private String userId;
     @ManyToOne

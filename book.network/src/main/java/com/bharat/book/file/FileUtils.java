@@ -12,14 +12,14 @@ import java.nio.file.Path;
 public class FileUtils {
 
     public static byte[] readFileFromLocation(String fileUrl) {
-        if (StringUtils.isBlank(fileUrl)){
+        if (StringUtils.isBlank(fileUrl)) {
             return null;
         }
-        try{
+        try {
             Path filePath = new File(fileUrl).toPath();
             return Files.readAllBytes(filePath);
-        }catch(IOException e){
-            log.warn("No such file found at path {}",fileUrl);
+        } catch (IOException e) {
+            log.warn("Nou file found in the path {}", fileUrl);
         }
         return null;
     }

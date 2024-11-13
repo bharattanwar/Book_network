@@ -1,9 +1,8 @@
 package com.bharat.book.book;
 
-import com.bharat.book.base.BaseModel;
+import com.bharat.book.base.BaseEntity;
 import com.bharat.book.feedback.Feedback;
 import com.bharat.book.history.BookTransactionHistory;
-import com.bharat.book.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 @Entity
-public class Book extends BaseModel {
+public class Book extends BaseEntity {
 
     private String title;
     private String authorName;
@@ -28,23 +27,26 @@ public class Book extends BaseModel {
     private String bookCover;
     private boolean archived;
     private boolean shareable;
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private User owner;
+    // @ManyToOne
+    // @JoinColumn(name = "owner_id")
+    // private User owner;
     @OneToMany(mappedBy = "book")
     private List<Feedback> feedbacks;
     @OneToMany(mappedBy = "book")
     private List<BookTransactionHistory> histories;
+
     @Transient
-    public double getRate(){
-        if(feedbacks == null || feedbacks.isEmpty()){
+    public double getRate() {
+        if (feedbacks == null || feedbacks.isEmpty()) {
             return 0.0;
         }
         var rate = this.feedbacks.stream()
-                .mapToDouble(Feedback::getRating)
+                .mapToDouble(Feedback::getNote)
                 .average()
                 .orElse(0.0);
         double roundedRate = Math.round(rate * 10.0) / 10.0;
+
+        // Return 4.0 if roundedRate is less than 4.5, otherwise return 4.5
         return roundedRate;
     }
 }

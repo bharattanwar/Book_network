@@ -9,7 +9,6 @@ import com.bharat.book.user.TokenRepository;
 import com.bharat.book.user.User;
 import com.bharat.book.user.UserRepository;
 import jakarta.mail.MessagingException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,7 +43,7 @@ public class AuthenticationService {
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .accountlocked(false)
+                .accountLocked(false)
                 .enabled(false)
                 .roles(List.of(userRole))
                 .build();
